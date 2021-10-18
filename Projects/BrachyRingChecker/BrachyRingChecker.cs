@@ -43,15 +43,15 @@ namespace VMS.TPS
             {
                 if (catheter.ApplicatorLength != 1320.0)
                 {
-                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter}, channel {catheter.ChannelNumber}  but the applicator " +
-                        $"length was {catheter.ApplicatorLength / 10} cm and should be 132 cm");
+                    System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the applicator " +
+                        $"length was {catheter.ApplicatorLength / 10}cm and should be 132 cm");
                 }
                 if (catheter.DeadSpaceLength > 0)
                 {
-                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter}, channel {catheter.ChannelNumber} but the dead space " +
-                        $" was {catheter.DeadSpaceLength / 10} cm and should be 0 cm");
+                    System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the dead space " +
+                        $" was {catheter.DeadSpaceLength / 10}cm and should be 0 cm");
                 }
-                System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter}, channel {catheter.ChannelNumber}." +
+                System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}." +
                     $" Use distal correction!");
             }
         }
