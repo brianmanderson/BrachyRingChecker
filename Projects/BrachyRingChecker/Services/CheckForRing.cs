@@ -1,43 +1,20 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using BrachyRingChecker.Services;
 
-// TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.9")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
-[assembly: AssemblyInformationalVersion("1.0")]
 
-// TODO: Uncomment the following line if the script requires write access.
-// [assembly: ESAPIScript(IsWriteable = true)]
-
-namespace VMS.TPS
+namespace BrachyRingChecker.Services
 {
-  public class Script
-  {
-    public Script()
+    public class CheckForRing
     {
-    }
+        public CheckForRing()
+        {
 
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public void Execute(ScriptContext context /*, System.Windows.Window window, ScriptEnvironment environment*/)
-    {
-            Patient patient = context.Patient;
-            BrachyPlanSetup brachy_plan = context.BrachyPlanSetup;
-            IEnumerable<Catheter> catheters = brachy_plan.Catheters;
-            CheckForRing ring_checker = new CheckForRing();
-            foreach (Catheter cat in catheters)
-            {
-                ring_checker.check_for_ring(cat);
-            }
-      // TODO : Add here the code that is called when the script is launched from Eclipse.
-    }
+        }
         public void check_for_ring(Catheter catheter)
         {
             bool angle_is_ring = is_ring_from_angle(catheter);
@@ -73,7 +50,7 @@ namespace VMS.TPS
                 points.Add(i);
             }
             double angle = 0;
-            for (int i = 0; i < counter - 2; i ++)
+            for (int i = 0; i < counter - 2; i++)
             {
                 VVector vector_1 = points[i + 1] - points[i];
                 double norm_1 = Math.Sqrt(Math.Pow(vector_1.x, 2) + Math.Pow(vector_1.y, 2) + Math.Pow(vector_1.z, 2));
@@ -93,5 +70,5 @@ namespace VMS.TPS
             }
             return false;
         }
-  }
+    }
 }
