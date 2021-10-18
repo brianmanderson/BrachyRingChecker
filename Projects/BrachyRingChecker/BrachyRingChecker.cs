@@ -9,7 +9,7 @@ using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.7")]
+[assembly: AssemblyVersion("1.0.0.8")]
 [assembly: AssemblyFileVersion("1.0.0.1")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
@@ -44,12 +44,12 @@ namespace VMS.TPS
                 if (catheter.ApplicatorLength != 1320.0)
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the applicator " +
-                        $"length was {catheter.ApplicatorLength / 10}cm and should be 132 cm");
+                        $"length was {catheter.ApplicatorLength / 10}cm and should be 132cm");
                 }
                 if (catheter.DeadSpaceLength > 0)
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the dead space " +
-                        $" was {catheter.DeadSpaceLength / 10}cm and should be 0 cm");
+                        $" was {catheter.DeadSpaceLength / 10}cm and should be 0cm");
                 }
                 System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}." +
                     $" Use distal correction!");
