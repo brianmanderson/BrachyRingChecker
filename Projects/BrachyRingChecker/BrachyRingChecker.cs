@@ -9,7 +9,7 @@ using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.6")]
+[assembly: AssemblyVersion("1.0.0.7")]
 [assembly: AssemblyFileVersion("1.0.0.1")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
@@ -32,24 +32,28 @@ namespace VMS.TPS
             IEnumerable<Catheter> catheters = brachy_plan.Catheters;
             foreach (Catheter cat in catheters)
             {
-                System.Windows.MessageBox.Show($"{cat}");
-                is_ring(cat);
+                check_for_ring(cat);
             }
       // TODO : Add here the code that is called when the script is launched from Eclipse.
     }
-        public bool is_ring(Catheter catheter)
+        public void check_for_ring(Catheter catheter)
         {
-            is_ring_from_angle(catheter);
-            if (catheter.ApplicatorLength != 1320.0)
+            bool angle_is_ring = is_ring_from_angle(catheter);
+            if (angle_is_ring)
             {
-                return false;
+                if (catheter.ApplicatorLength != 1320.0)
+                {
+                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter.Name}, channel {catheter.ChannelNumber}  but the applicator " +
+                        $"length was {catheter.ApplicatorLength}");
+                }
+                if (catheter.DeadSpaceLength > 0)
+                {
+                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter.Name}, channel {catheter.ChannelNumber} but the dead space " +
+                        $" was {catheter.DeadSpaceLength}");
+                }
+                System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter.Name}, channel {catheter.ChannelNumber}." +
+                    $"Use distal correction!");
             }
-            if (catheter.DeadSpaceLength > 0)
-            {
-                return false;
-            }
-            double[] distances;
-            return true;
         }
         public bool is_ring_from_angle(Catheter catheter)
         {
@@ -76,7 +80,10 @@ namespace VMS.TPS
                 double angle_degrees = Math.Acos(dot_product) * 180 / Math.PI;
                 angle += angle_degrees;
             }
-            System.Windows.MessageBox.Show($"Angle was found to be {angle}");
+            if (angle > 90) // If we have over 90 degrees, this is definitely a ring...
+            {
+                return true;
+            }
             return false;
         }
   }
