@@ -41,18 +41,24 @@ namespace VMS.TPS
             bool angle_is_ring = is_ring_from_angle(catheter);
             if (angle_is_ring)
             {
+                bool error_free = true;
                 if (catheter.ApplicatorLength != 1320.0)
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the applicator " +
                         $"length was {catheter.ApplicatorLength / 10}cm and should be 132cm");
+                    error_free = false;
                 }
                 if (catheter.DeadSpaceLength > 0)
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the dead space " +
                         $" was {catheter.DeadSpaceLength / 10}cm and should be 0cm");
+                    error_free = false;
                 }
-                System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}." +
-                    $" Use distal correction!");
+                if (error_free)
+                {
+                    System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}." +
+                        $" Use distal correction!");
+                }
             }
         }
         public bool is_ring_from_angle(Catheter catheter)
