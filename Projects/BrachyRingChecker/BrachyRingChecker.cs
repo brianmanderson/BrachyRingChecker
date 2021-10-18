@@ -30,10 +30,10 @@ namespace VMS.TPS
     {
             BrachyPlanSetup brachy_plan = context.BrachyPlanSetup;
             IEnumerable<Catheter> catheters = brachy_plan.Catheters;
-            CheckForRing ring_checker = new CheckForRing();
+            CheckForRing ringCheckerClass = new CheckForRing();
             foreach (Catheter cat in catheters)
             {
-                ring_checker.check_for_ring(cat);
+                ringCheckerClass.check_for_ring(cat);
             }
       // TODO : Add here the code that is called when the script is launched from Eclipse.
     }

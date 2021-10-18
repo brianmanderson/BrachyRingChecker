@@ -17,23 +17,23 @@ namespace BrachyRingChecker.Services
         }
         public void check_for_ring(Catheter catheter)
         {
-            bool angle_is_ring = is_ring_from_angle(catheter);
+            bool angle_is_ring = is_ring_from_angle(catheter); // Determine if we have more than 90 degrees of curvature
             if (angle_is_ring)
             {
                 bool error_free = true;
-                if (catheter.ApplicatorLength != 1320.0)
+                if (catheter.ApplicatorLength != 1320.0) // Check applicator length
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the applicator " +
                         $"length was {catheter.ApplicatorLength / 10}cm and should be 132cm");
                     error_free = false;
                 }
-                if (catheter.DeadSpaceLength > 0)
+                if (catheter.DeadSpaceLength > 0) // Check dead space
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the dead space " +
                         $" was {catheter.DeadSpaceLength / 10}cm and should be 0cm");
                     error_free = false;
                 }
-                if (error_free)
+                if (error_free) // Reminder for distal correction
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}." +
                         $" Use distal correction!");
