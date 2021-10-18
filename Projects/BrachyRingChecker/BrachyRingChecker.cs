@@ -43,16 +43,16 @@ namespace VMS.TPS
             {
                 if (catheter.ApplicatorLength != 1320.0)
                 {
-                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter.Name}, channel {catheter.ChannelNumber}  but the applicator " +
+                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter}, channel {catheter.ChannelNumber}  but the applicator " +
                         $"length was {catheter.ApplicatorLength}");
                 }
                 if (catheter.DeadSpaceLength > 0)
                 {
-                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter.Name}, channel {catheter.ChannelNumber} but the dead space " +
+                    System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter}, channel {catheter.ChannelNumber} but the dead space " +
                         $" was {catheter.DeadSpaceLength}");
                 }
-                System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter.Name}, channel {catheter.ChannelNumber}." +
-                    $"Use distal correction!");
+                System.Windows.MessageBox.Show($"Angle indicates a ring for {catheter}, channel {catheter.ChannelNumber}." +
+                    $" Use distal correction!");
             }
         }
         public bool is_ring_from_angle(Catheter catheter)
