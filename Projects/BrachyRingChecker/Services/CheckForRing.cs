@@ -49,21 +49,14 @@ namespace BrachyRingChecker.Services
         }
         public bool is_ring_from_angle(Catheter catheter)
         {
-            int counter = 0;
-            List<VVector> points = new List<VVector>();
-            foreach (VVector i in catheter.Shape)
-            {
-                counter += 1;
-                points.Add(i);
-            }
             double angle = 0;
-            for (int i = 0; i < counter - 2; i++)
+            for (int i = 0; i < catheter.Shape.Length - 2; i++)
             {
-                VVector vector_1 = points[i + 1] - points[i];
+                VVector vector_1 = catheter.Shape[i + 1] - catheter.Shape[i];
                 double norm_1 = Math.Sqrt(Math.Pow(vector_1.x, 2) + Math.Pow(vector_1.y, 2) + Math.Pow(vector_1.z, 2));
                 vector_1 /= norm_1;
 
-                VVector vector_2 = points[i + 2] - points[i + 1];
+                VVector vector_2 = catheter.Shape[i + 2] - catheter.Shape[i + 1];
                 double norm_2 = Math.Sqrt(Math.Pow(vector_2.x, 2) + Math.Pow(vector_2.y, 2) + Math.Pow(vector_2.z, 2));
                 vector_2 /= norm_2;
 
