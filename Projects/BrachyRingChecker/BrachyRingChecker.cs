@@ -10,7 +10,7 @@ using VMS.TPS.Common.Model.Types;
 using BrachyRingChecker.Services;
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("2.0.0.1")]
+[assembly: AssemblyVersion("2.0.0.2")]
 [assembly: AssemblyFileVersion("1.0.0.1")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
@@ -29,12 +29,9 @@ namespace VMS.TPS
     public void Execute(ScriptContext context /*, System.Windows.Window window, ScriptEnvironment environment*/)
     {
             BrachyPlanSetup brachy_plan = context.BrachyPlanSetup;
-            IEnumerable<Catheter> catheters = brachy_plan.Catheters;
+
             CheckForRing ringCheckerClass = new CheckForRing();
-            foreach (Catheter cat in catheters)
-            {
-                ringCheckerClass.check_for_ring(cat);
-            }
+            ringCheckerClass.check_brachyplan_for_rings(brachy_plan);
       // TODO : Add here the code that is called when the script is launched from Eclipse.
     }
   }

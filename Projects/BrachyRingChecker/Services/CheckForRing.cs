@@ -13,7 +13,14 @@ namespace BrachyRingChecker.Services
     {
         public CheckForRing()
         {
-
+        }
+        public void check_brachyplan_for_rings(BrachyPlanSetup brachyPlan)
+        {
+            IEnumerable<Catheter> catheters = brachyPlan.Catheters;
+            foreach (Catheter cat in catheters)
+            {
+                check_for_ring(cat);
+            }
         }
         public void check_for_ring(Catheter catheter)
         {
