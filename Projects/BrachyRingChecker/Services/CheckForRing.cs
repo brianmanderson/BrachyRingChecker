@@ -73,7 +73,7 @@ namespace BrachyRingChecker.Services
             }
             // Original idea was to make it 180, but for particularly torterous paths, like soft tissue sarcoma patients
             // the program was identifying them as rings
-            if (angle > 250) // 250 degrees is almost 3/4 of the full circle, this should be an effective minimum requirement
+            if (angle > 270) // 270 degrees is 3/4 of the full circle, this should be an effective minimum requirement
             {
                 return true;
             }
