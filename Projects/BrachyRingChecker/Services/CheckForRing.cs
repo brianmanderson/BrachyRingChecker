@@ -71,7 +71,7 @@ namespace BrachyRingChecker.Services
                 double angle_degrees = Math.Acos(dot_product) * 180 / Math.PI;
                 angle += angle_degrees;
             }
-            if (angle > 120) // If we have over 120 degrees, this is definitely a ring...
+            if (angle > 180) // If we have over 180 degrees, this is definitely a ring...
             {
                 return true;
             }
