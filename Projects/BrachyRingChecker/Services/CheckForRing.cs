@@ -40,6 +40,23 @@ namespace BrachyRingChecker.Services
                         $" was {catheter.DeadSpaceLength / 10}cm and should be 0cm");
                     error_free = false;
                 }
+                List<SourcePosition> sourcepositions = catheter.SourcePositions.ToList();
+                if (sourcepositions.Count == 0)
+                {
+                    error_free = false;
+                    System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but there are no source positions!");
+                }
+                else
+                {
+                    double dwell_time_0 = sourcepositions[0].DwellTime;
+                    if (dwell_time_0 != 0.4)
+                    {
+                        error_free = false;
+                        System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, " +
+                            $"but the first dwell time was {dwell_time_0} and not 0.4s");
+                    }
+                }
+
                 if (error_free) // Reminder for distal correction
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}." +
