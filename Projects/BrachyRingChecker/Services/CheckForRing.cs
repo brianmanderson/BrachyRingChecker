@@ -53,7 +53,7 @@ namespace BrachyRingChecker.Services
                     {
                         error_free = false;
                         System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, " +
-                            $"but the first dwell time was {dwell_time_0} and not 0.4s");
+                            $"but the first dwell time was {dwell_time_0}s and not 0.4s");
                     }
                 }
 
