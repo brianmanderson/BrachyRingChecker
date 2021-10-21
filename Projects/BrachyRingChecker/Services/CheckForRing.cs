@@ -49,7 +49,7 @@ namespace BrachyRingChecker.Services
                 else
                 {
                     double dwell_time_0 = sourcepositions[0].DwellTime;
-                    if (dwell_time_0 != 0.4)
+                    if (dwell_time_0 < 0.4)
                     {
                         error_free = false;
                         System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, " +
