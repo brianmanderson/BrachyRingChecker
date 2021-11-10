@@ -21,19 +21,25 @@ namespace BrachyRingChecker.Services
         public void check_brachyplan_for_rings(BrachyPlanSetup brachyPlan)
         {
             IEnumerable<Catheter> catheters = brachyPlan.Catheters;
+            bool general_check;
             foreach (Catheter cat in catheters)
             {
-                check_for_ring(cat);
+                general_check = general_checks(cat);
+                if (general_check)
+                {
+                    check_for_ring(cat);
+                }
             }
         }
-        public void general_checks(Catheter catheter)
+        public bool general_checks(Catheter catheter)
         {
-
             List<SourcePosition> sourcepositions = catheter.SourcePositions.ToList();
             if (sourcepositions.Count == 0)
             {
-                System.Windows.MessageBox.Show($"Catheter ring in channel {catheter.ChannelNumber}, {catheter}, but there are no source positions!");
+                System.Windows.MessageBox.Show($"Catheter in channel {catheter.ChannelNumber}, {catheter}, but there are no source positions!");
+                return false;
             }
+            return true;
         }
         public void check_for_ring(Catheter catheter)
         {
@@ -53,7 +59,6 @@ namespace BrachyRingChecker.Services
                         $" was {catheter.DeadSpaceLength / 10}cm and should be {ring_deadspace_mm / 10} cm");
                     error_free = false;
                 }
-
                 else
                 {
                     List<SourcePosition> sourcepositions = catheter.SourcePositions.ToList();
@@ -62,7 +67,7 @@ namespace BrachyRingChecker.Services
                     {
                         error_free = false;
                         System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, " +
-                            $"but the first dwell time was {dwell_time_0}s and not 0.4s");
+                            $"but the first dwell time was {dwell_time_0}s and not {min_dwell_time}s");
                     }
                 }
 
