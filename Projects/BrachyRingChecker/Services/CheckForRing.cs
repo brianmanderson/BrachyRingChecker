@@ -11,6 +11,10 @@ namespace BrachyRingChecker.Services
 {
     public class CheckForRing
     {
+        double min_dwell_time = 0.4;
+        double ring_length_mm = 1320.0;
+        double ring_deadspace_mm = 0;
+        double ring_angle_degrees = 270;
         public CheckForRing()
         {
         }
@@ -22,34 +26,39 @@ namespace BrachyRingChecker.Services
                 check_for_ring(cat);
             }
         }
+        public void general_checks(Catheter catheter)
+        {
+
+            List<SourcePosition> sourcepositions = catheter.SourcePositions.ToList();
+            if (sourcepositions.Count == 0)
+            {
+                System.Windows.MessageBox.Show($"Catheter ring in channel {catheter.ChannelNumber}, {catheter}, but there are no source positions!");
+            }
+        }
         public void check_for_ring(Catheter catheter)
         {
-            bool angle_is_ring = is_ring_from_angle(catheter); // Determine if we have more than 90 degrees of curvature
+            bool angle_is_ring = is_ring_from_angle(catheter); // Determine if we have more than 270 degrees of curvature
             if (angle_is_ring)
             {
                 bool error_free = true;
-                if (catheter.ApplicatorLength != 1320.0) // Check applicator length
+                if (catheter.ApplicatorLength != ring_length_mm) // Check applicator length
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the applicator " +
                         $"length was {catheter.ApplicatorLength / 10}cm and should be 132cm");
                     error_free = false;
                 }
-                if (catheter.DeadSpaceLength > 0) // Check dead space
+                if (catheter.DeadSpaceLength > ring_deadspace_mm) // Check dead space
                 {
                     System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but the dead space " +
-                        $" was {catheter.DeadSpaceLength / 10}cm and should be 0cm");
+                        $" was {catheter.DeadSpaceLength / 10}cm and should be {ring_deadspace_mm / 10} cm");
                     error_free = false;
                 }
-                List<SourcePosition> sourcepositions = catheter.SourcePositions.ToList();
-                if (sourcepositions.Count == 0)
-                {
-                    error_free = false;
-                    System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, but there are no source positions!");
-                }
+
                 else
                 {
+                    List<SourcePosition> sourcepositions = catheter.SourcePositions.ToList();
                     double dwell_time_0 = sourcepositions[0].DwellTime;
-                    if (dwell_time_0 < 0.4)
+                    if (dwell_time_0 < min_dwell_time)
                     {
                         error_free = false;
                         System.Windows.MessageBox.Show($"Potential ring in channel {catheter.ChannelNumber}, {catheter}, " +
@@ -83,7 +92,7 @@ namespace BrachyRingChecker.Services
             }
             // Original idea was to make it 180, but for particularly torterous paths, like soft tissue sarcoma patients
             // the program was identifying them as rings
-            if (angle > 270) // 270 degrees is 3/4 of the full circle, this should be an effective minimum requirement
+            if (angle > ring_angle_degrees) // 270 degrees is 3/4 of the full circle, this should be an effective minimum requirement
             {
                 return true;
             }
